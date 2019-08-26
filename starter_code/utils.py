@@ -15,7 +15,7 @@ def get_full_case_id(cid):
 
 def get_case_path(cid):
     # Resolve location where data should be living
-    data_path = Path(__file__).parent.parent / "data"
+    data_path = Path(__file__).parent.parent / "datasets"
     if not data_path.exists():
         raise IOError(
             "Data path, {}, could not be resolved".format(str(data_path))
