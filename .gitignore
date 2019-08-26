@@ -1,6 +1,6 @@
 # ignore the databases
 
-databases/
+datasets/
 
 ##########################[python]###########################
 # Byte-compiled / optimized / DLL files
