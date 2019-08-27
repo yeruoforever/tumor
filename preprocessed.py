@@ -17,6 +17,10 @@ def hu_to_grayscale(volume, hu_min=-512, hu_max=512):
     im_volume = 255*im_volume
     return np.stack((im_volume, im_volume, im_volume), axis=-1)
 
+def convert_WHC_to_CHW(volume:np.ndarray):
+    "转换为torch.nn模型接受的形式（C，W，H）"
+    return volume.transpose(2,0,1)
+
 
 class KidneyTumor(Dataset):
     "肾肿瘤数据集对象"
@@ -39,7 +43,8 @@ class KidneyTumor(Dataset):
             self.cache_vol, self.cache_seg = load_case(case_id)
             self.cache_vol, self.cache_seg = self.cache_vol.get_data(), self.cache_seg.get_data()
             self.cache_case_id = case_id
-        return hu_to_grayscale(self.cache_vol[no]), self.cache_seg[no]
+        vol=hu_to_grayscale(self.cache_vol[no])
+        return convert_WHC_to_CHW(vol), self.cache_seg[no]
 
     def __len__(self):
         "返回数据集的长度"
